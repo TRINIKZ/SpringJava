@@ -17,6 +17,7 @@ public class JDMModel {
     private String modelo;
     private String marca;
     private String ano;
+    private String senha;
 
     public UUID getId() {
         return id;
@@ -41,6 +42,14 @@ public class JDMModel {
     }
     public void setAno(String ano) {
         this.ano = ano;
+    }
+    public String getSenha() {
+        // TODO Auto-generated method stub
+        return senha;
+    }
+    public void setSenha(String senhaHash) {
+        // TODO Auto-generated method stub
+        this.senha = senha;
     }
     
 }
