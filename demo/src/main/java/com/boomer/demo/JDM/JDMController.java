@@ -4,12 +4,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.hibernate.mapping.List;
+
+import java.util.List;
+import java.util.UUID;
+
+
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 @RestController
@@ -36,14 +43,10 @@ private ResponseEntity JDMModel(@RequestBody JDMModel jdmModel, HttpServletReque
                 .hashToString(12, jdmModel.getSenha().toCharArray());
                 jdmModel.setSenha(senhaHash);
                 var criado = this.jdmRepository.save(jdmModel);
-                return ResponseEntity.status(HttpStatus.CREATED).body(criado)
+                return ResponseEntity.status(HttpStatus.CREATED).body(criado);
     }
 }
 
-@GetMapping("/mensagem")
-private String retornoMensagem(){
-    return "Você acessou um link secreto!";
-}
 // 13/03
 @GetMapping("/jdmusers")
 public List<JDMModel> listarCarros(){
@@ -52,7 +55,7 @@ public List<JDMModel> listarCarros(){
 }
 
 @PutMapping("/atualiza")
-public ResponseEntity atualizaUser(@RequestBody JDMModel usermodel){
+public ResponseEntity atualizaUser(@RequestBody JDMModel jdmModel){
     var criado = this.jdmRepository.save(jdmModel);
     return ResponseEntity.status(HttpStatus.CREATED).body(criado);
 }
