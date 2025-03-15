@@ -27,23 +27,17 @@ public class JDMController {
     private JDMRepository jdmRepository;
 
 @PostMapping("/jdmnovo")
-private ResponseEntity JDMModel(@RequestBody JDMModel jdmModel, HttpServletRequest request){
+public ResponseEntity<Object> createJDM(@RequestBody JDMModel jdmModel, HttpServletRequest request) {
     var existente = this.jdmRepository.findByModelo(jdmModel.getModelo());
 
     if (existente != null) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cadastro existente");
-        
-    } /*else {
+    } else {
+        var senhaHash = BCrypt.withDefaults()
+            .hashToString(12, jdmModel.getSenha().toCharArray());
+        jdmModel.setSenha(senhaHash);
         var criado = this.jdmRepository.save(jdmModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(criado);
-        */
-                // 13/03
-            else {
-            var senhaHash = BCrypt.withDefaults()
-                .hashToString(12, jdmModel.getSenha().toCharArray());
-                jdmModel.setSenha(senhaHash);
-                var criado = this.jdmRepository.save(jdmModel);
-                return ResponseEntity.status(HttpStatus.CREATED).body(criado);
     }
 }
 

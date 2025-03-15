@@ -44,12 +44,10 @@ public class JDMModel {
         this.ano = ano;
     }
     public String getSenha() {
-        // TODO Auto-generated method stub
         return senha;
     }
     public void setSenha(String senhaHash) {
-        // TODO Auto-generated method stub
-        this.senha = senha;
+        this.senha = senhaHash;
     }
     
 }
