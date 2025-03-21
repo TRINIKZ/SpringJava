@@ -26,23 +26,36 @@ public class JDMController {
     @Autowired
     private JDMRepository jdmRepository;
 
-@PostMapping("/jdmnovo")
-public ResponseEntity<Object> createJDM(@RequestBody JDMModel jdmModel, HttpServletRequest request) {
-    var existente = this.jdmRepository.findByModelo(jdmModel.getModelo());
-
-    if (existente != null) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cadastro existente");
-    } else {
-        var senhaHash = BCrypt.withDefaults()
-            .hashToString(12, jdmModel.getSenha().toCharArray());
-        jdmModel.setSenha(senhaHash);
-        var criado = this.jdmRepository.save(jdmModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(criado);
+    @PostMapping("/jdmnovo") //21/03/25
+    public ResponseEntity<Object> createJDM(@RequestBody JDMModel jdmModel, HttpServletRequest request) {
+        // Check if modelo already exists
+        var existente = this.jdmRepository.findByModelo(jdmModel.getModelo());
+    
+        // If the model already exists, return a BAD_REQUEST
+        if (existente != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("cadastro existente");
+        } else {
+            // Ensure that senha is not null before proceeding with hashing
+            if (jdmModel.getSenha() == null || jdmModel.getSenha().isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Senha não pode ser nula ou vazia");
+            }
+    
+            // Hash the senha using BCrypt if it's not null
+            var senhaHash = BCrypt.withDefaults()
+                .hashToString(12, jdmModel.getSenha().toCharArray());
+            
+            // Set the hashed password back to the model
+            jdmModel.setSenha(senhaHash);
+    
+            // Save the new JDMModel to the repository
+            var criado = this.jdmRepository.save(jdmModel);
+            
+            // Return the created model with a CREATED status
+            return ResponseEntity.status(HttpStatus.CREATED).body(criado);
+        }
     }
-}
-
-// 13/03
-@GetMapping("/jdmusers")
+    
+@GetMapping("/jdmusers") // 13/03/25
 public List<JDMModel> listarCarros(){
     List<JDMModel> carrocad = jdmRepository.findAll();
     return carrocad;

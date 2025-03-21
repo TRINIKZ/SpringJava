@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 @Entity (name = "tb_jdm")
 
 public class JDMModel {
+    
 
     @Id
     @GeneratedValue (generator = "UUID")
@@ -48,6 +49,10 @@ public class JDMModel {
     }
     public void setSenha(String senhaHash) {
         this.senha = senhaHash;
+    }
+    public char[] getPassword() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
     }
     
 }
