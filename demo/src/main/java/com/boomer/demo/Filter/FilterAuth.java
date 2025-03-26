@@ -41,7 +41,7 @@ import java.util.Base64;
         System.out.println(username);
         System.out.println(senha);
 //Validação de usuario
-        var user = this.jdmRepository.findByUsermame(username);
+        var user = this.jdmRepository.findByUsername(username);
         if (user == null){
             response.sendError(401, "usuario sem autorizacao") ;
         } else{

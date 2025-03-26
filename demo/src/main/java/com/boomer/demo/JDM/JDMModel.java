@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 @Entity (name = "tb_jdm")
 
 public class JDMModel {
-    
+
 
     @Id
     @GeneratedValue (generator = "UUID")
@@ -19,7 +19,15 @@ public class JDMModel {
     private String marca;
     private String ano;
     private String senha;
+    private String username;
 
+
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
     public UUID getId() {
         return id;
     }
@@ -51,7 +59,7 @@ public class JDMModel {
         this.senha = senhaHash;
     }
     public char[] getPassword() {
-        // TODO Auto-generated method stub
+        /*TODO Auto-generated method stub*/ 
         throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
     }
     
